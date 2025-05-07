@@ -35,8 +35,12 @@ function reh_settings_page_callback() {
                 ?>
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><label for="reh_api_key">API Key</label></th>
+                        <th scope="row"><label for="reh_api_key">API</label></th>
                         <td><input type="text" id="reh_api_key" name="reh_api_key" value="<?php echo esc_attr(get_option('reh_api_key')); ?>" /></td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row"><label for="reh_basic_url">Basic URL</label></th>
+                        <td><input type="text" id="reh_basic_url" name="reh_basic_url" value="<?php echo esc_attr(get_option('reh_basic_url')); ?>" /></td>
                     </tr>
                 </table>
                 <?php submit_button(); ?>
@@ -67,9 +71,40 @@ function reh_settings_page_callback() {
     </div>
     <?php
 }
+
 add_action('admin_init', 'reh_register_settings');
 
 function reh_register_settings() {
     register_setting('real_estate_settings_group', 'reh_api_key');
+    register_setting('real_estate_settings_group', 'reh_basic_url');  
     register_setting('real_estate_settings_group', 'reh_log_output');
 }
+
+function reh_write_log($message) {
+    $log_file = REH_PLUGIN_DIR . '/log.txt';
+    $timestamp = date('Y-m-d H:i:s');
+    $log_message = "[{$timestamp}] - {$message}\n";
+
+    file_put_contents($log_file, $log_message, FILE_APPEND);
+    $log_content = file_get_contents($log_file);
+    update_option('reh_log_output', $log_content);
+}
+function reh_clear_log_file() {
+    $log_file = REH_PLUGIN_DIR . '/log.txt';
+    if (file_exists($log_file)) {
+        file_put_contents($log_file, '');
+    }
+}
+add_action('reh_clear_log', 'reh_clear_log_file');
+if (!wp_next_scheduled('reh_clear_log')) {
+    wp_schedule_event(time(), 'daily', 'reh_clear_log');
+}
+function reh_clear_log_deactivation() {
+    $timestamp = wp_next_scheduled('reh_clear_log');
+    if ($timestamp) {
+        wp_unschedule_event($timestamp, 'reh_clear_log');
+    }
+}
+
+register_deactivation_hook(__FILE__, 'reh_clear_log_deactivation');
+?>
