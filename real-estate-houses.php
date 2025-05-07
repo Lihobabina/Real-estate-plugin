@@ -18,4 +18,8 @@ if (!class_exists('ACF')) {
     return;
 }
 
-require_once REH_PLUGIN_DIR . 'includes/post-types/house.php';
+require_once REH_PLUGIN_DIR . '/cpt-houses.php';
+require_once REH_PLUGIN_DIR . '/acf-options.php';
+require_once REH_PLUGIN_DIR . '/houses-cron.php';
+require_once REH_PLUGIN_DIR . '/class-parse-runner.php';
+require_once REH_PLUGIN_DIR . '/ajax-handler.php';
