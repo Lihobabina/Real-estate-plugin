@@ -19,7 +19,7 @@ if (!class_exists('ACF')) {
 }
 
 require_once REH_PLUGIN_DIR . '/cpt-houses.php';
-require_once REH_PLUGIN_DIR . '/acf-options.php';
+require_once REH_PLUGIN_DIR . '/real-estate-admin.php';
 require_once REH_PLUGIN_DIR . '/houses-cron.php';
-require_once REH_PLUGIN_DIR . '/class-parse-runner.php';
+require_once REH_PLUGIN_DIR . '/ParseRunner.php';
 require_once REH_PLUGIN_DIR . '/ajax-handler.php';
