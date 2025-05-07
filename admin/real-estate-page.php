@@ -48,7 +48,7 @@ function reh_settings_page_callback() {
             <?php
         } elseif ($active_tab === 'manual') {
             ?>
-            <button type="button" id="reh_run_import" class="button-primary">Run Import</button>
+            <button type="button" id="reh_run_import" class="button-primary"  style="margin-top: 20px;">Run Import</button>
             <?php
         } elseif ($active_tab === 'log') {
             ?>
