@@ -49,6 +49,7 @@ function reh_settings_page_callback() {
         } elseif ($active_tab === 'manual') {
             ?>
             <button type="button" id="reh_run_import" class="button-primary"  style="margin-top: 20px;">Run Import</button>
+            <div id="reh_import_result" style="margin-top: 15px;"></div>
             <?php
         } elseif ($active_tab === 'log') {
             ?>
@@ -89,3 +90,18 @@ function reh_write_log($message) {
     $log_content = file_get_contents($log_file);
     update_option('reh_log_output', $log_content);
 }
+
+add_action('admin_enqueue_scripts', 'reh_enqueue_scripts');
+
+function reh_enqueue_scripts($hook) {
+    if ($hook === 'toplevel_page_real-estate-settings') {
+        wp_enqueue_script('reh-ajax-runner', plugin_dir_url(__FILE__) . '../js/ajax-runner.js', ['jquery'], null, true);
+
+        wp_localize_script('reh-ajax-runner', 'reh_ajax_object', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce'    => wp_create_nonce('reh_run_parser_nonce')
+        ]);
+    }
+}
+
+
