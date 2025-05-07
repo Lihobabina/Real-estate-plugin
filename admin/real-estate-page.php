@@ -89,22 +89,3 @@ function reh_write_log($message) {
     $log_content = file_get_contents($log_file);
     update_option('reh_log_output', $log_content);
 }
-function reh_clear_log_file() {
-    $log_file = REH_PLUGIN_DIR . '/log.txt';
-    if (file_exists($log_file)) {
-        file_put_contents($log_file, '');
-    }
-}
-add_action('reh_clear_log', 'reh_clear_log_file');
-if (!wp_next_scheduled('reh_clear_log')) {
-    wp_schedule_event(time(), 'daily', 'reh_clear_log');
-}
-function reh_clear_log_deactivation() {
-    $timestamp = wp_next_scheduled('reh_clear_log');
-    if ($timestamp) {
-        wp_unschedule_event($timestamp, 'reh_clear_log');
-    }
-}
-
-register_deactivation_hook(__FILE__, 'reh_clear_log_deactivation');
-?>
