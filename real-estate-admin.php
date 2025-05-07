@@ -1,0 +1,75 @@
+<?php
+add_action('admin_menu', 'reh_register_settings_page');
+
+function reh_register_settings_page() {
+    add_menu_page(
+        'Real Estate Settings', 
+        'Real Estate',
+        'manage_options',
+        'real-estate-settings',
+        'reh_settings_page_callback',
+        'dashicons-building',
+        30
+    );
+}
+
+function reh_settings_page_callback() {
+    $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'api';
+    ?>
+    <div class="wrap">
+        <h1>Real Estate Settings</h1>
+
+        <h2 class="nav-tab-wrapper">
+            <a href="?page=real-estate-settings&tab=api" class="nav-tab <?php echo $active_tab === 'api' ? 'nav-tab-active' : ''; ?>">API</a>
+            <a href="?page=real-estate-settings&tab=manual" class="nav-tab <?php echo $active_tab === 'manual' ? 'nav-tab-active' : ''; ?>">Manual Run</a>
+            <a href="?page=real-estate-settings&tab=log" class="nav-tab <?php echo $active_tab === 'log' ? 'nav-tab-active' : ''; ?>">Log</a>
+        </h2>
+
+        <?php
+        if ($active_tab === 'api') {
+            ?>
+            <form method="post" action="options.php">
+                <?php
+                settings_fields('real_estate_settings_group');
+                do_settings_sections('real-estate-api-settings');
+                ?>
+                <table class="form-table">
+                    <tr valign="top">
+                        <th scope="row"><label for="reh_api_key">API Key</label></th>
+                        <td><input type="text" id="reh_api_key" name="reh_api_key" value="<?php echo esc_attr(get_option('reh_api_key')); ?>" /></td>
+                    </tr>
+                </table>
+                <?php submit_button(); ?>
+            </form>
+            <?php
+        } elseif ($active_tab === 'manual') {
+            ?>
+            <button type="button" id="reh_run_import" class="button-primary">Run Import</button>
+            <?php
+        } elseif ($active_tab === 'log') {
+            ?>
+            <form method="post" action="options.php">
+                <?php
+                settings_fields('real_estate_settings_group');
+                do_settings_sections('real-estate-log-settings');
+                ?>
+                <table class="form-table">
+                    <tr valign="top">
+                        <th scope="row"><label for="reh_log_output">Log Output</label></th>
+                        <td><textarea id="reh_log_output" name="reh_log_output" readonly rows="10" cols="60"><?php echo esc_textarea(get_option('reh_log_output')); ?></textarea></td>
+                    </tr>
+                </table>
+                <?php submit_button(); ?>
+            </form>
+            <?php
+        }
+        ?>
+    </div>
+    <?php
+}
+add_action('admin_init', 'reh_register_settings');
+
+function reh_register_settings() {
+    register_setting('real_estate_settings_group', 'reh_api_key');
+    register_setting('real_estate_settings_group', 'reh_log_output');
+}
