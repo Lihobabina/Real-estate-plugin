@@ -19,9 +19,10 @@ if (!class_exists('ACF')) {
 }
 
 require_once REH_PLUGIN_DIR . '/cpt-houses.php';
+require_once REH_PLUGIN_DIR . '/ApiHouseClient.php';
+require_once REH_PLUGIN_DIR . '/ParseRunner.php';
 require_once REH_PLUGIN_DIR . '/admin/real-estate-page.php';
 require_once REH_PLUGIN_DIR . '/houses-cron.php';
-require_once REH_PLUGIN_DIR . '/ParseRunner.php';
 require_once REH_PLUGIN_DIR . '/ajax-handler.php';
 require_once REH_PLUGIN_DIR . '/reh-cron-log-cleaner.php';
 

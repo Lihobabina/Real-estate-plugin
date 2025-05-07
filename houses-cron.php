@@ -7,7 +7,10 @@ if (!defined('ABSPATH')) {
 add_action('reh_cron_hook', 'reh_run_scheduled_task');
 
 function reh_run_scheduled_task() {
-    //#TODO
+    $parseRunner = new ParseRunner();
+    $parseRunner -> start();
+    
+
 }
 
 

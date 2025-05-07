@@ -7,8 +7,8 @@ class ApiHouseClient {
     private string $apiUrl;
     private Client $client;
 
-    public function __construct(string $apiUrl) {
-        $this->apiUrl = $apiUrl;
+    public function __construct() {
+        $this->apiUrl = ''; //get_wp_meta('')
         $this->client = new Client(); 
     }
 
