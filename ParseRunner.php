@@ -9,12 +9,12 @@ class ParseRunner {
 
     public function __construct() {
         $this->apiHouseClient = new ApiHouseClient();
-        
+
     }
 
     public function start(){
         $totalHouses = $this->apiHouseClient->getTotalHouses();
-
+        
 
 
     }
