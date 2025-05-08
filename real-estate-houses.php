@@ -17,7 +17,7 @@ if (!class_exists('ACF')) {
     });
     return;
 }
-
+require_once REH_PLUGIN_DIR . 'vendor/autoload.php';
 require_once REH_PLUGIN_DIR . '/cpt-houses.php';
 require_once REH_PLUGIN_DIR . '/ApiHouseClient.php';
 require_once REH_PLUGIN_DIR . '/ParseRunner.php';

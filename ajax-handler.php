@@ -8,7 +8,6 @@ function reh_run_parser_ajax() {
     if (class_exists('ParseRunner')) {
         $parser = new ParseRunner();
         $parser->run();
-
         wp_send_json_success('Parser finished successfully.');
     } else {
         wp_send_json_error('Parser class not found.');
