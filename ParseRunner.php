@@ -18,7 +18,11 @@ class ParseRunner {
 
 
     }
-
+    public function run() {
+        if (function_exists('reh_write_log')) {
+            reh_write_log('Manual run started via AJAX.');
+        }
+    }
     
 
     
