@@ -1,0 +1,8 @@
+{
+        "require": {
+          "guzzlehttp/guzzle": "^7.9",
+                "doiftrue/wp-kama-cron": "^1.3"
+        }
+
+
+      }
