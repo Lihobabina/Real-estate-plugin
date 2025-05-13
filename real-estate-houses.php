@@ -11,18 +11,19 @@ if (!defined('ABSPATH')) {
 
 define('REH_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
-if (!class_exists('ACF')) {
-    add_action('admin_notices', function () {
-        echo '<div class="notice notice-error"><p><strong>Real Estate Houses</strong> requires the <strong>Advanced Custom Fields</strong> plugin to be active.</p></div>';
-    });
-    return;
-}
+
 require_once REH_PLUGIN_DIR . 'vendor/autoload.php';
-require_once REH_PLUGIN_DIR . '/cpt-houses.php';
-require_once REH_PLUGIN_DIR . '/ApiHouseClient.php';
-require_once REH_PLUGIN_DIR . '/ParseRunner.php';
+
+require_once REH_PLUGIN_DIR . '/core/cpt/cpt-houses.php';
+require_once REH_PLUGIN_DIR . '/core/acf-meta/houses-acf.php';
+
+require_once REH_PLUGIN_DIR . '/core/ApiHouseClient.php';
+require_once REH_PLUGIN_DIR . '/core/ParseRunner.php';
 require_once REH_PLUGIN_DIR . '/admin/real-estate-page.php';
-require_once REH_PLUGIN_DIR . '/houses-cron.php';
-require_once REH_PLUGIN_DIR . '/ajax-handler.php';
-require_once REH_PLUGIN_DIR . '/log-cleaner-cron.php';
+require_once REH_PLUGIN_DIR . '/core/ajax/ajax-manual-parse.php';
+
+
+require_once REH_PLUGIN_DIR . '/core/cron/log-cleaner-cron.php';
+require_once REH_PLUGIN_DIR . '/core/cron/houses-cron.php';
+
 
