@@ -22,7 +22,7 @@ class ApiHouseClient {
                 $body = $response->getBody();
                 return ['success' => true, 'data' => (int) trim($body), 'error' => null];
             } else {
-                $errorMessage = 'Failed to get total houses. Status code: ' . $response->getStatusCode() . '. Response body: ' . $response->getBody();
+                $errorMessage = 'Failed to get total houses. Status code: ' . $response->getStatusCode();
                 return ['success' => false, 'data' => null, 'error' => $errorMessage];
             }
         } catch (GuzzleException $e) {
@@ -31,21 +31,28 @@ class ApiHouseClient {
         }
     }
 
-    public function getAllHouses(): array {
+    public function getHousesBatch(int $page, int $perPage): array {
         $url = $this->apiUrl . $this->allHousesUrl;
         try {
-            $response = $this->client->request('POST', $url);
+            $response = $this->client->request('POST', $url, [
+                'json' => [
+                    'page' => $page,
+                    'perPage' => $perPage
+                ]
+            ]);
+
             if ($response->getStatusCode() === 200) {
                 $body = $response->getBody();
                 $data = json_decode($body, true);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    return ['success' => false, 'data' => null, 'error' => 'Failed to decode JSON: ' . json_last_error_msg()];
+                }
                 return ['success' => true, 'data' => $data, 'error' => null];
             } else {
-                $errorMessage = 'Failed to get all houses. Status code: ' . $response->getStatusCode() . '. Response body: ' . $response->getBody();
-                return ['success' => false, 'data' => null, 'error' => $errorMessage];
+                return ['success' => false, 'data' => null, 'error' => 'Failed to get houses batch. Status code: ' . $response->getStatusCode()];
             }
         } catch (GuzzleException $e) {
-            $errorMessage = 'Guzzle error while getting all houses: ' . $e->getMessage();
-            return ['success' => false, 'data' => null, 'error' => $errorMessage];
+            return ['success' => false, 'data' => null, 'error' => 'Guzzle error: ' . $e->getMessage()];
         }
     }
 }

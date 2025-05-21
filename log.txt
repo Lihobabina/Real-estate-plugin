@@ -1,0 +1,16 @@
+[2025-05-21 17:00:40] - ParseRunner initiated. Offset: 0, Limit: 5
+[2025-05-21 17:00:40] - Total houses found: 20
+[2025-05-21 17:00:41] - Requested limit: 5, Actual houses received: 5
+[2025-05-21 17:00:41] - Processed 5 houses. Next offset: 5. Total: 20
+[2025-05-21 17:00:41] - ParseRunner initiated. Offset: 5, Limit: 5
+[2025-05-21 17:00:41] - Total houses found: 20
+[2025-05-21 17:00:41] - Requested limit: 5, Actual houses received: 5
+[2025-05-21 17:00:42] - Processed 5 houses. Next offset: 10. Total: 20
+[2025-05-21 17:00:42] - ParseRunner initiated. Offset: 10, Limit: 5
+[2025-05-21 17:00:42] - Total houses found: 20
+[2025-05-21 17:00:42] - Requested limit: 5, Actual houses received: 5
+[2025-05-21 17:00:42] - Processed 5 houses. Next offset: 15. Total: 20
+[2025-05-21 17:00:43] - ParseRunner initiated. Offset: 15, Limit: 5
+[2025-05-21 17:00:43] - Total houses found: 20
+[2025-05-21 17:00:43] - Requested limit: 5, Actual houses received: 5
+[2025-05-21 17:00:43] - Processed 5 houses. Next offset: 20. Total: 20

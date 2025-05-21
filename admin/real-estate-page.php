@@ -3,7 +3,7 @@ add_action('admin_menu', 'reh_register_settings_page');
 
 function reh_register_settings_page() {
     add_menu_page(
-        'Real Estate Settings', 
+        'Real Estate Settings',
         'Real Estate',
         'manage_options',
         'real-estate-settings',
@@ -35,12 +35,16 @@ function reh_settings_page_callback() {
                 ?>
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><label for="reh_api_key">API</label></th>
+                        <th scope="row"><label for="reh_api_key">API Key</label></th>
                         <td><input type="text" id="reh_api_key" name="reh_api_key" value="<?php echo esc_attr(get_option('reh_api_key')); ?>" /></td>
                     </tr>
                     <tr valign="top">
                         <th scope="row"><label for="reh_basic_url">Basic URL</label></th>
                         <td><input type="text" id="reh_basic_url" name="reh_basic_url" value="<?php echo esc_attr(get_option('reh_basic_url')); ?>" /></td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row"><label for="reh_per_run_limit">Per Run Limit</label></th>
+                        <td><input type="number" id="reh_per_run_limit" name="reh_per_run_limit" value="<?php echo esc_attr(get_option('reh_per_run_limit', 5)); ?>" min="1" /></td>
                     </tr>
                 </table>
                 <?php submit_button(); ?>
@@ -77,7 +81,8 @@ add_action('admin_init', 'reh_register_settings');
 
 function reh_register_settings() {
     register_setting('real_estate_settings_group', 'reh_api_key');
-    register_setting('real_estate_settings_group', 'reh_basic_url');  
+    register_setting('real_estate_settings_group', 'reh_basic_url');
+    register_setting('real_estate_settings_group', 'reh_per_run_limit');
     register_setting('real_estate_settings_group', 'reh_log_output');
 }
 
@@ -99,9 +104,8 @@ function reh_enqueue_scripts($hook) {
 
         wp_localize_script('reh-ajax-runner', 'reh_ajax_object', [
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce'    => wp_create_nonce('reh_run_parser_nonce')
+            'nonce'    => wp_create_nonce('reh_run_parser_nonce'),
+            'per_run_limit' => get_option('reh_per_run_limit' ) 
         ]);
     }
 }
-
-
